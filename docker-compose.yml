@@ -1,0 +1,43 @@
+services:
+  db-produto:
+    image: mysql:8.0
+    container_name: db-produto
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u${MYSQL_USER} -p${MYSQL_PASSWORD} --silent" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    environment:
+      MYSQL_DATABASE: produto_db
+      MYSQL_USER: produto_user
+      MYSQL_PASSWORD: secure_password_produto
+      MYSQL_ROOT_PASSWORD: secure_root_password_produto
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data_produto:/var/lib/mysql
+    networks:
+      - pedido-net
+
+  produto-api:
+    build: .
+    container_name: produto-api-dev
+    depends_on:
+      db-produto:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-produto:3306/produto_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: produto_user
+      SPRING_DATASOURCE_PASSWORD: secure_password_produto
+    networks:
+      - pedido-net
+
+volumes:
+  db_data_produto:
+
+networks:
+  pedido-net:

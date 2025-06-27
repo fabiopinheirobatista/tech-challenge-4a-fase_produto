@@ -1,0 +1,9 @@
+CREATE TABLE produtos (
+      id BIGINT PRIMARY KEY AUTO_INCREMENT,
+      nome VARCHAR(255) NOT NULL,
+      sku VARCHAR(255) NOT NULL UNIQUE,
+      preco DECIMAL(10,2) NOT NULL
+);
+
+ALTER TABLE produtos
+      ADD CONSTRAINT uk_produto_sku UNIQUE (sku);
