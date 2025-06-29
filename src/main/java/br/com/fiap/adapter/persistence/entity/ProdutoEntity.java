@@ -13,7 +13,6 @@ import java.math.BigDecimal;
         @UniqueConstraint(name = "uk_produto_sku", columnNames = {"sku"})
 })
 @Getter
-//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProdutoEntity {
