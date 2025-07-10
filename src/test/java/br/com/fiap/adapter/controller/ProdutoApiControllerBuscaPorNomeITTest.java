@@ -34,7 +34,6 @@ class ProdutoApiControllerBuscaPorNomeITTest {
 
     @BeforeEach
     void setup() throws Exception {
-        // Cadastra produtos para teste
         cadastrarProduto("Refrigerante Cola", 8.90, "SKU001");
         cadastrarProduto("Refrigerante Laranja",7.90, "SKU002");
         cadastrarProduto("Suco de Uva", 12.90, "SKU003");

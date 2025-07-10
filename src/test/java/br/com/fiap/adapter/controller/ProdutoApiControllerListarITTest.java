@@ -63,7 +63,6 @@ class ProdutoApiControllerListarITTest {
 
     @Test
     void deveRetornarListaVaziaQuandoNaoHouverProdutos() throws Exception {
-        // Limpa os dados do setup
         mockMvc.perform(get("/produtos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())

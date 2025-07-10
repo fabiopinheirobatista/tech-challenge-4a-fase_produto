@@ -36,13 +36,10 @@ class ProdutoApiControllerAtualizarITTest {
 
     @BeforeEach
     void setup() throws Exception {
-        // Criar produto inicial para testes
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",
                 "SKU123",
                 new BigDecimal(100.90));
-
-        // Cadastrar produto e obter ID
         String response = mockMvc.perform(post("/produtos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(produto)))

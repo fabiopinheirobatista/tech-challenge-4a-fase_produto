@@ -47,7 +47,6 @@ class ControllerExceptionHandlerTest {
 
     @Test
     void handleConstraintViolationException() {
-        // Arrange
         Set<ConstraintViolation<?>> violations = new HashSet<>();
         ConstraintViolation<?> violation = mock(ConstraintViolation.class);
         Path path = mock(Path.class);
@@ -59,7 +58,6 @@ class ControllerExceptionHandlerTest {
 
         ConstraintViolationException ex = new ConstraintViolationException("Erro de validação", violations);
 
-        // Act
         ResponseEntity<Object> response = exceptionHandler.handleConstraintViolationException(ex, webRequest);
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -104,15 +102,10 @@ class ControllerExceptionHandlerTest {
 
     @Test
     void handleDataIntegrityViolationException() {
-        // Arrange
         DataIntegrityViolationException ex = new DataIntegrityViolationException(
                 "Duplicate entry '123.456.789-10' for key 'cpf'"
         );
-
-        // Act
         ResponseEntity<Object> response = exceptionHandler.handleDataIntegrityViolationException(ex, webRequest);
-
-        // Assert
         assertNotNull(response);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         Problem problem = (Problem) response.getBody();
@@ -123,10 +116,8 @@ class ControllerExceptionHandlerTest {
     @Test
     void handleNoHandlerFoundException() {
         NoHandlerFoundException ex = new NoHandlerFoundException("GET", "/invalid-path", new HttpHeaders());
-
         ResponseEntity<Object> response = exceptionHandler.handleNoHandlerFoundException(
                 ex, new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
-
         assertNotNull(response);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         Problem problem = (Problem) response.getBody();

@@ -67,14 +67,11 @@ class ProdutoApiControllerSalvarITTest {
             "preco": 99.90
         }
         """;
-
-        // Cadastra o primeiro produto
         mockMvc.perform(post("/produtos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(produtoJson))
                 .andExpect(status().isCreated());
 
-        // Tenta cadastrar o segundo produto com mesmo SKU
         String segundoProdutoJson = """
         {
             "nome": "Outro Produto",
