@@ -2,6 +2,7 @@ package br.com.fiap.adapter.controller;
 
 import br.com.fiap.TechChallenge4aFaseProdutoApplication;
 import br.com.fiap.core.usecase.cliente.CadastrarProdutoUseCase;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
+@DisplayName("Testes de integração para cadastro de produtos via API")
 class ProdutoApiControllerSalvarITTest {
 
     @Autowired
@@ -28,6 +30,7 @@ class ProdutoApiControllerSalvarITTest {
     private CadastrarProdutoUseCase cadastrarProdutoUseCase;
 
     @Test
+    @DisplayName("Deve salvar um produto com sucesso")
     void deveSalvarProdutoComSucesso() throws Exception {
         String produtoJson = """
             {
@@ -49,6 +52,7 @@ class ProdutoApiControllerSalvarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar erro ao tentar salvar produto sem dados obrigatórios")
     void deveRetornarErroAoSalvarProdutoSemDados() throws Exception {
         String produtoJson = "{}";
 
@@ -59,6 +63,7 @@ class ProdutoApiControllerSalvarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar erro ao tentar salvar produto com SKU duplicado")
     void deveRetornarErroAoSalvarProdutoComSkuDuplicado() throws Exception {
         String produtoJson = """
         {
