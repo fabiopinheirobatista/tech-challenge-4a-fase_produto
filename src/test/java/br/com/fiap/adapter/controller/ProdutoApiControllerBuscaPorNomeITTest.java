@@ -35,6 +35,7 @@ class ProdutoApiControllerBuscaPorNomeITTest {
     private ObjectMapper objectMapper;
 
     @BeforeEach
+    @DisplayName("Configura o ambiente de teste cadastrando produtos com diferentes tipos de bebidas")
     void setup() throws Exception {
         cadastrarProduto("Refrigerante Cola", 8.90, "SKU001");
         cadastrarProduto("Refrigerante Laranja",7.90, "SKU002");
@@ -50,6 +51,7 @@ class ProdutoApiControllerBuscaPorNomeITTest {
     }
 
     @Test
+    @DisplayName("Deve buscar produtos que contenham parte do nome especificado")
     void deveBuscarProdutosPorNomeComSucesso() throws Exception {
         mockMvc.perform(get("/produtos/nome/{nome}", "Refrigerante"))
                 .andExpect(status().isOk())
@@ -60,6 +62,7 @@ class ProdutoApiControllerBuscaPorNomeITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar uma lista vazia quando não encontrar produtos com o nome especificado")
     void deveRetornarListaVaziaQuandoNaoEncontrarProdutos() throws Exception {
         mockMvc.perform(get("/produtos/nome/{nome}", "Produto Inexistente"))
                 .andExpect(status().isOk())
@@ -68,6 +71,7 @@ class ProdutoApiControllerBuscaPorNomeITTest {
     }
 
     @Test
+    @DisplayName("Deve buscar produto pelo nome exato e validar seus dados")
     void deveBuscarProdutoComNomeExato() throws Exception {
         mockMvc.perform(get("/produtos/nome/{nome}", "Suco de Uva"))
                 .andExpect(status().isOk())

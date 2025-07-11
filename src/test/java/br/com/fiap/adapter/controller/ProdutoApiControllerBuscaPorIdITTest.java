@@ -35,6 +35,7 @@ class ProdutoApiControllerBuscaPorIdITTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @DisplayName("Deve criar um produto e depois buscar por ID com sucesso, validando todos os campos retornados")
     void deveBuscarProdutoPorIdComSucesso() throws Exception {
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",
@@ -62,6 +63,7 @@ class ProdutoApiControllerBuscaPorIdITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar status 404 (Not Found) ao tentar buscar um produto com ID inexistente")
     void deveRetornarNotFoundAoBuscarProdutoInexistente() throws Exception {
         Long idInexistente = 99999L;
 
@@ -77,6 +79,7 @@ class ProdutoApiControllerBuscaPorIdITTest {
 
 
     @Test
+    @DisplayName("Deve retornar status 400 (Bad Request) ao tentar buscar um produto com ID em formato inválido")
     void deveRetornarBadRequestAoBuscarComIdInvalido() throws Exception {
         mockMvc.perform(get("/produtos/abc"))
                 .andExpect(status().isBadRequest());

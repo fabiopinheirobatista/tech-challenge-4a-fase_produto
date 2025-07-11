@@ -35,6 +35,7 @@ class ProdutoApiControllerListarITTest {
     private ObjectMapper objectMapper;
 
     @BeforeEach
+    @DisplayName("Configura o ambiente de teste cadastrando 3 produtos para os testes")
     void setup() throws Exception {
         cadastrarProduto("Produto 1", 10.0, "SKU001");
         cadastrarProduto("Produto 2", 20.0, "SKU002");
@@ -50,6 +51,7 @@ class ProdutoApiControllerListarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar uma lista com todos os produtos cadastrados, verificando nome e SKU de cada um")
     void deveListarTodosProdutosComSucesso() throws Exception {
         mockMvc.perform(get("/produtos"))
                 .andExpect(status().isOk())
@@ -64,6 +66,7 @@ class ProdutoApiControllerListarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar uma lista vazia quando não houver produtos cadastrados")
     void deveRetornarListaVaziaQuandoNaoHouverProdutos() throws Exception {
         mockMvc.perform(get("/produtos"))
                 .andExpect(status().isOk())

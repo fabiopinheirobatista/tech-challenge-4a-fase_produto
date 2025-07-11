@@ -37,6 +37,7 @@ class ProdutoApiControllerAtualizarITTest {
     private Long produtoId;
 
     @BeforeEach
+    @DisplayName("Configura o ambiente de teste cadastrando um produto para ser atualizado")
     void setup() throws Exception {
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",
@@ -54,6 +55,7 @@ class ProdutoApiControllerAtualizarITTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar um produto existente com sucesso, validando os novos valores")
     void deveAtualizarProdutoComSucesso() throws Exception {
 
 
@@ -72,6 +74,7 @@ class ProdutoApiControllerAtualizarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar erro 405 (Method Not Allowed) ao tentar atualizar um produto inexistente")
     void deveRetornarNotFoundAoAtualizarProdutoInexistente() throws Exception {
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",
