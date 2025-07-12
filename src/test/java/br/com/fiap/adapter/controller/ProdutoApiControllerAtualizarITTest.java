@@ -4,6 +4,7 @@ import br.com.fiap.TechChallenge4aFaseProdutoApplication;
 import br.com.fiap.adapter.controller.request.ProdutoDtoRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
+@DisplayName("Testes de integração para atualização de produtos via API")
 class ProdutoApiControllerAtualizarITTest {
 
     @Autowired
@@ -35,14 +37,12 @@ class ProdutoApiControllerAtualizarITTest {
     private Long produtoId;
 
     @BeforeEach
+    @DisplayName("Configura o ambiente de teste cadastrando um produto para ser atualizado")
     void setup() throws Exception {
-        // Criar produto inicial para testes
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",
                 "SKU123",
                 new BigDecimal(100.90));
-
-        // Cadastrar produto e obter ID
         String response = mockMvc.perform(post("/produtos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(produto)))
@@ -55,6 +55,7 @@ class ProdutoApiControllerAtualizarITTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar um produto existente com sucesso, validando os novos valores")
     void deveAtualizarProdutoComSucesso() throws Exception {
 
 
@@ -73,6 +74,7 @@ class ProdutoApiControllerAtualizarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar erro 405 (Method Not Allowed) ao tentar atualizar um produto inexistente")
     void deveRetornarNotFoundAoAtualizarProdutoInexistente() throws Exception {
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",

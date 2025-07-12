@@ -4,6 +4,7 @@ import br.com.fiap.TechChallenge4aFaseProdutoApplication;
 import br.com.fiap.adapter.controller.request.ProdutoDtoRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
+@DisplayName("Testes de integração para listagem de produtos via API")
 class ProdutoApiControllerListarITTest {
 
     @Autowired
@@ -33,6 +35,7 @@ class ProdutoApiControllerListarITTest {
     private ObjectMapper objectMapper;
 
     @BeforeEach
+    @DisplayName("Configura o ambiente de teste cadastrando 3 produtos para os testes")
     void setup() throws Exception {
         cadastrarProduto("Produto 1", 10.0, "SKU001");
         cadastrarProduto("Produto 2", 20.0, "SKU002");
@@ -48,6 +51,7 @@ class ProdutoApiControllerListarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar uma lista com todos os produtos cadastrados, verificando nome e SKU de cada um")
     void deveListarTodosProdutosComSucesso() throws Exception {
         mockMvc.perform(get("/produtos"))
                 .andExpect(status().isOk())
@@ -62,8 +66,8 @@ class ProdutoApiControllerListarITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar uma lista vazia quando não houver produtos cadastrados")
     void deveRetornarListaVaziaQuandoNaoHouverProdutos() throws Exception {
-        // Limpa os dados do setup
         mockMvc.perform(get("/produtos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())

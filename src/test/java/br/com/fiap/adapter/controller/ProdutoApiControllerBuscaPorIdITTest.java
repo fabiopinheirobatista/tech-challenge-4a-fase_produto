@@ -4,6 +4,7 @@ import br.com.fiap.TechChallenge4aFaseProdutoApplication;
 import br.com.fiap.adapter.controller.request.ProdutoDtoRequest;
 import br.com.fiap.core.exception.ProdutoNaoEncontradoException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
+@DisplayName("Testes de integração para busca de produtos por ID via API")
 class ProdutoApiControllerBuscaPorIdITTest {
 
     @Autowired
@@ -33,6 +35,7 @@ class ProdutoApiControllerBuscaPorIdITTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @DisplayName("Deve criar um produto e depois buscar por ID com sucesso, validando todos os campos retornados")
     void deveBuscarProdutoPorIdComSucesso() throws Exception {
         ProdutoDtoRequest produto = new ProdutoDtoRequest(
                 "Produto Teste",
@@ -60,6 +63,7 @@ class ProdutoApiControllerBuscaPorIdITTest {
     }
 
     @Test
+    @DisplayName("Deve retornar status 404 (Not Found) ao tentar buscar um produto com ID inexistente")
     void deveRetornarNotFoundAoBuscarProdutoInexistente() throws Exception {
         Long idInexistente = 99999L;
 
@@ -75,6 +79,7 @@ class ProdutoApiControllerBuscaPorIdITTest {
 
 
     @Test
+    @DisplayName("Deve retornar status 400 (Bad Request) ao tentar buscar um produto com ID em formato inválido")
     void deveRetornarBadRequestAoBuscarComIdInvalido() throws Exception {
         mockMvc.perform(get("/produtos/abc"))
                 .andExpect(status().isBadRequest());
